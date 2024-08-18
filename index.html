@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -9,268 +8,204 @@
         body {
             margin: 0;
             padding: 0;
+            overflow: hidden;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0.8), rgba(0,0,0,1)); 
-            font-family: 'Arial', sans-serif;
-            color: white;
-            text-align: center;
-            overflow: hidden;
             position: relative;
+            text-align: center;
         }
-        .heart {
-            position: absolute;
-            width: 200px;
-            height: 180px;
-            background: url('image.png') no-repeat center/contain;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: float 5s infinite ease-in-out, beat 1s infinite ease-in-out, flyToText 5s ease-in-out 2s forwards;
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
         }
-        @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) translateY(-10px); }
-            50% { transform: translate(-50%, -50%) translateY(10px); }
-        }
-        @keyframes beat {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-        }
-        @keyframes flyToText {
-            100% { top: 20%; left: 50%; transform: translate(-50%, -20%) scale(0.5); }
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        .stars {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite ease-in-out alternate;
-            opacity: 0.8;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-        .firefly {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: yellow;
-            border-radius: 50%;
-            box-shadow: 0 0 10px yellow;
-            animation: fly 10s infinite;
-        }
-        @keyframes fly {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(100px, -50px); }
-            50% { transform: translate(-50px, 100px); }
-            75% { transform: translate(-100px, -50px); }
-            100% { transform: translate(0, 0); }
-        }
+
         #message {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             font-size: 2.5em;
             opacity: 0;
+            padding: 10px;
             animation: fadeIn 1s ease-in-out forwards;
             background: linear-gradient(to right, #ff9999, #ff66b2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5), 0 0 20px rgba(255, 105, 180, 0.5);
+            max-width: 90%;
+            box-sizing: border-box;
         }
-        #message2 {
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2em;
-            color: #ff66b2;
-            opacity: 0;
-            animation: fadeIn 2s ease-in-out 1s forwards;
+
+        @media screen and (max-width: 600px) {
+            #message {
+                font-size: 2em;
+                padding: 20px;
+                max-width: 80%;
+            }
         }
-        #message2 a {
-            color: #ff66b2;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-            animation: jump 1.5s infinite;
-        }
-        @keyframes jump {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .effect {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: rgba(255, 182, 193, 0.8);
-            border-radius: 50%;
-            pointer-events: none;
-            box-shadow: 0 0 10px 10px rgba(255, 182, 193, 0.5);
-            animation: effectAnimation 1s ease-out;
-        }
-        @keyframes effectAnimation {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: scale(2); opacity: 0; }
-        }
-        .heart-effect {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: url('heart.png') no-repeat center/contain;
-            background-size: cover;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: heartEffect 1s ease-out forwards;
-        }
-        @keyframes heartEffect {
-            from { transform: scale(1); opacity: 1; bottom: 0; }
-            to { transform: scale(0.5); opacity: 0; bottom: 100vh; }
-        }
-        .meteor {
-            position: absolute;
-            width: 50px;
-            height: 50px; 
-            background: radial-gradient(circle, rgba(255,255,255,0.8), rgba(255,0,0,0.8)); 
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255,255,255,0.8);
-            animation: meteor 1s linear infinite;
-            transform: rotate(45deg);
-        }
-        @keyframes meteor {
-            0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 1; }
-            100% { transform: translateX(-300vw) translateY(300vh) rotate(45deg); opacity: 0; }
-        }
-        .star-particle {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: white;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            animation: floatStar 10s infinite;
-        }
-        @keyframes floatStar {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(calc(-100vw + 100px), calc(100vh - 100px)); }
-        }
-        .star-trail {
-            position: absolute;
-            width: 2px;
-            height: 100vh;
-            background: rgba(255, 255, 255, 0.8); 
-            opacity: 0.8;
-            transform: rotate(30deg);
-            animation: starTrail 10s linear infinite;
-        }
-        @keyframes starTrail {
-            0% { transform: translateX(0) rotate(30deg); }
-            100% { transform: translateX(100vw) rotate(30deg); }
-        }
-        .heart-particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: url('heart.png') no-repeat center/contain;
-            background-size: cover;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: heartParticle 5s linear infinite;
-        }
-        @keyframes heartParticle {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-200px) scale(0.5); }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <div class="stars" style="top:10%; left:10%; animation: twinkle 3s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:20%; left:30%; animation: twinkle 4s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:30%; left:50%; animation: twinkle 2s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:40%; left:70%; animation: twinkle 5s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:50%; left:90%; animation: twinkle 3s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:60%; left:20%; animation: twinkle 4s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:70%; left:40%; animation: twinkle 2s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:80%; left:60%; animation: twinkle 5s infinite ease-in-out alternate;"></div>
-    <div class="stars" style="top:90%; left:80%; animation: twinkle 3s infinite ease-in-out alternate;"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="firefly"></div>
-    <div class="heart"></div>
+    <canvas id="canvas"></canvas>
     <div id="message">我是李思蒽 A beautiful girl.</div>
-    
+
+
+    <audio id="background-music" loop>
+        <source src="https://raw.githubusercontent.com/lisien520/-/main/%E6%9A%AE%E8%89%B2%E5%9B%9E%E5%93%8D.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <button id="play-music" style="position: absolute; top: 10px; left: 10px; z-index: 1000; padding: 10px; background: pink; border: none; border-radius: 5px; cursor: pointer;">
+        播放背景音乐
+    </button>
+
     <script>
-        document.body.addEventListener('touchstart', function(e) {
-            for (let i = 0; i < 5; i++) {
-                const heartEffect = document.createElement('div');
-                heartEffect.className = 'heart-effect';
-                document.body.appendChild(heartEffect);
-                const x = e.touches[0].pageX;
-                const y = e.touches[0].pageY;
-                heartEffect.style.left = `${x}px`;
-                heartEffect.style.top = `${y}px`;
-                setTimeout(() => {
-                    heartEffect.remove();
-                }, 1000);
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor(x, y, hue) {
+                this.x = x;
+                this.y = y;
+                this.hue = hue;
+                this.radius = Math.random() * 2 + 1;
+                this.velocity = {
+                    x: Math.random() * 6 - 3,
+                    y: Math.random() * 6 - 3
+                };
+                this.life = 100;
+                this.alpha = 1;
             }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`;
+                ctx.fill();
+                ctx.closePath();
+            }
+
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.life--;
+                this.alpha -= 0.01;
+                if (this.life < 50) {
+                    this.velocity.y += 0.05;
+                }
+            }
+        }
+
+        class Firework {
+            constructor(x, y, targetX, targetY, hue) {
+                this.x = x;
+                this.y = y;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.hue = hue;
+                this.speed = 3;
+                this.angle = Math.atan2(targetY - y, targetX - x);
+                this.velocity = {
+                    x: Math.cos(this.angle) * this.speed,
+                    y: Math.sin(this.angle) * this.speed
+                };
+                this.particles = [];
+                this.trail = [];
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
+                ctx.fill();
+                ctx.closePath();
+
+                for (let i = 0; i < this.trail.length; i++) {
+                    const point = this.trail[i];
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${1 - i / this.trail.length})`;
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+
+            update() {
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+
+                this.trail.push({x: this.x, y: this.y});
+                if (this.trail.length > 20) {
+                    this.trail.shift();
+                }
+
+                const distance = Math.hypot(this.x - this.targetX, this.y - this.targetY);
+                if (distance < 5) {
+                    for (let i = 0; i < 100; i++) {
+                        this.particles.push(new Particle(this.x, this.y, this.hue));
+                    }
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        let fireworks = [];
+        let particles = [];
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.05) {
+                const x = Math.random() * canvas.width;
+                const y = canvas.height;
+                const targetX = Math.random() * canvas.width;
+                const targetY = Math.random() * canvas.height / 2;
+                const hue = Math.random() * 360;
+                fireworks.push(new Firework(x, y, targetX, targetY, hue));
+            }
+
+            fireworks = fireworks.filter(firework => {
+                firework.draw();
+                const exploded = firework.update();
+                if (exploded) {
+                    particles = particles.concat(firework.particles);
+                }
+                return !exploded;
+            });
+
+            particles = particles.filter(particle => {
+                particle.draw();
+                particle.update();
+                return particle.alpha > 0;
+            });
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
 
-        document.body.addEventListener('touchmove', function(e) {
-            const x = e.touches[0].pageX;
-            const y = e.touches[0].pageY;
-            const heartEffect = document.createElement('div');
-            heartEffect.className = 'heart-effect';
-            document.body.appendChild(heartEffect);
-            heartEffect.style.left = `${x}px`;
-            heartEffect.style.top = `${y}px`;
-            setTimeout(() => {
-                heartEffect.remove();
-            }, 1000);
+
+        document.getElementById('play-music').addEventListener('click', function() {
+            const audio = document.getElementById('background-music');
+            audio.play().catch(error => {
+                console.error('音乐播放失败：', error);
+            });
         });
-
-        function createMeteor() {
-            const meteor = document.createElement('div');
-            meteor.className = 'meteor';
-            meteor.style.left = `${Math.random() * 100}vw`;
-            meteor.style.top = `${Math.random() * 50}vh`;
-            document.body.appendChild(meteor);
-            setTimeout(() => {
-                meteor.remove();
-            }, 1000);
-        }
-
-        function createStarParticle() {
-            const star = document.createElement('div');
-            star.className = 'star-particle';
-            star.style.left = `${Math.random() * 100}vw`;
-            star.style.top = `${Math.random() * 100}vh`;
-            document.body.appendChild(star);
-            setTimeout(() => {
-                star.remove();
-            }, 10000);
-        }
-
-        function createHeartParticle() {
-            const heartParticle = document.createElement('div');
-            heartParticle.className = 'heart-particle';
-            heartParticle.style.left = `${Math.random() * 100}vw`;
-            heartParticle.style.top = `${Math.random() * 100}vh`;
-            document.body.appendChild(heartParticle);
-            setTimeout(() => {
-                heartParticle.remove();
-            }, 5000);
-        }
-
-        setInterval(createMeteor, 1500);
-        setInterval(createStarParticle, 300);
-        setInterval(createHeartParticle, 2000);
     </script>
 </body>
 </html>
