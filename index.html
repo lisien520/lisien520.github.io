@@ -49,21 +49,81 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+
+        #play-music {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            padding: 10px;
+            background: pink;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #music-control {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            animation: flyIn 0.5s ease forwards;
+        }
+
+        @keyframes flyIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        #music-control input[type="range"] {
+            width: 100%;
+        }
+
+        #music-time {
+            margin: 10px 0;
+            color: white;
+        }
+
+        #close-control {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #ff66b2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <div id="message">我是李思蒽 A beautiful girl.</div>
 
-
     <audio id="background-music" loop>
         <source src="https://raw.githubusercontent.com/lisien520/-/main/%E6%91%A9%E5%A4%A9%E8%BD%AE%E7%9A%84%E6%80%9D%E5%BF%B5.mp3" type="audio/mpeg">
         您的浏览器不支持音频元素。
     </audio>
 
-    <button id="play-music" style="position: absolute; top: 10px; left: 10px; z-index: 1000; padding: 10px; background: pink; border: none; border-radius: 5px; cursor: pointer;">
-        播放背景音乐
-    </button>
+    <button id="play-music">播放背景音乐</button>
+
+    <div id="music-control">
+        <div id="music-time">00:00 / 00:00</div>
+        <input type="range" id="music-progress" value="0" step="0.1" max="100">
+        <button id="close-control">关闭</button>
+    </div>
 
     <script>
 
@@ -71,6 +131,74 @@
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        const audio = document.getElementById('background-music');
+        const playButton = document.getElementById('play-music');
+        const musicControl = document.getElementById('music-control');
+        const musicProgress = document.getElementById('music-progress');
+        const musicTime = document.getElementById('music-time');
+        const closeControl = document.getElementById('close-control');
+
+        let isPlaying = false;
+
+        playButton.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                playButton.textContent = '播放背景音乐';
+            } else {
+                audio.play().catch(error => {
+                    console.error('音乐播放失败：', error);
+                });
+                playButton.textContent = '暂停背景音乐';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        playButton.addEventListener('dblclick', showMusicControl);
+        playButton.addEventListener('touchstart', handleTouchStart);
+        playButton.addEventListener('touchend', handleTouchEnd);
+
+        function showMusicControl() {
+            musicControl.style.display = 'block';
+            updateProgress();
+        }
+
+        function hideMusicControl() {
+            musicControl.style.display = 'none';
+        }
+
+        closeControl.addEventListener('click', hideMusicControl);
+
+        function updateProgress() {
+            const currentTime = audio.currentTime;
+            const duration = audio.duration;
+
+            musicProgress.value = (currentTime / duration) * 100;
+
+            const formatTime = (time) => {
+                const minutes = Math.floor(time / 60);
+                const seconds = Math.floor(time % 60);
+                return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            };
+
+            musicTime.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+        }
+
+        musicProgress.addEventListener('input', function() {
+            audio.currentTime = (musicProgress.value / 100) * audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', updateProgress);
+
+        let touchTimeout;
+
+        function handleTouchStart() {
+            touchTimeout = setTimeout(showMusicControl, 500);
+        }
+
+        function handleTouchEnd() {
+            clearTimeout(touchTimeout);
+        }
 
         class Particle {
             constructor(x, y, hue) {
@@ -143,7 +271,7 @@
                 this.x += this.velocity.x;
                 this.y += this.velocity.y;
 
-                this.trail.push({x: this.x, y: this.y});
+                this.trail.push({ x: this.x, y: this.y });
                 if (this.trail.length > 20) {
                     this.trail.shift();
                 }
@@ -197,14 +325,6 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        });
-
-
-        document.getElementById('play-music').addEventListener('click', function() {
-            const audio = document.getElementById('background-music');
-            audio.play().catch(error => {
-                console.error('音乐播放失败：', error);
-            });
         });
     </script>
 </body>
