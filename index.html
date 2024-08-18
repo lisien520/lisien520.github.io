@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -84,6 +85,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(255, 105, 180, 0.5), 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+        #message2 {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            color: #ff66b2;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 1s forwards;
+        }
+        #message2 a {
+            color: #ff66b2;
+            text-decoration: none;
+            position: relative;
+            display: inline-block;
+            animation: jump 1.5s infinite;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         .effect {
             position: absolute;
@@ -192,8 +214,8 @@
                 document.body.appendChild(heartEffect);
                 const x = e.touches[0].pageX;
                 const y = e.touches[0].pageY;
-                heartEffect.style.left = ${x}px;
-                heartEffect.style.top = ${y}px;
+                heartEffect.style.left = `${x}px`;
+                heartEffect.style.top = `${y}px`;
                 setTimeout(() => {
                     heartEffect.remove();
                 }, 1000);
@@ -206,8 +228,8 @@
             const heartEffect = document.createElement('div');
             heartEffect.className = 'heart-effect';
             document.body.appendChild(heartEffect);
-            heartEffect.style.left = ${x}px;
-            heartEffect.style.top = ${y}px;
+            heartEffect.style.left = `${x}px`;
+            heartEffect.style.top = `${y}px`;
             setTimeout(() => {
                 heartEffect.remove();
             }, 1000);
@@ -216,8 +238,8 @@
         function createMeteor() {
             const meteor = document.createElement('div');
             meteor.className = 'meteor';
-            meteor.style.left = ${Math.random() * 100}vw;
-            meteor.style.top = ${Math.random() * 50}vh;
+            meteor.style.left = `${Math.random() * 100}vw`;
+            meteor.style.top = `${Math.random() * 50}vh`;
             document.body.appendChild(meteor);
             setTimeout(() => {
                 meteor.remove();
@@ -227,8 +249,8 @@
         function createStarParticle() {
             const star = document.createElement('div');
             star.className = 'star-particle';
-            star.style.left = ${Math.random() * 100}vw;
-            star.style.top = ${Math.random() * 100}vh;
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.top = `${Math.random() * 100}vh`;
             document.body.appendChild(star);
             setTimeout(() => {
                 star.remove();
@@ -238,8 +260,8 @@
         function createHeartParticle() {
             const heartParticle = document.createElement('div');
             heartParticle.className = 'heart-particle';
-            heartParticle.style.left = ${Math.random() * 100}vw;
-            heartParticle.style.top = ${Math.random() * 100}vh;
+            heartParticle.style.left = `${Math.random() * 100}vw`;
+            heartParticle.style.top = `${Math.random() * 100}vh`;
             document.body.appendChild(heartParticle);
             setTimeout(() => {
                 heartParticle.remove();
